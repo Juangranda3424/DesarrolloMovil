@@ -1,20 +1,30 @@
-import 'package:atomicdesign/design_system/atomos/app_text.dart';
+
 import 'package:flutter/material.dart';
+import '../atomos/app_text.dart';
+import '../atomos/custom_icon.dart';
 
 class InfoRow extends StatelessWidget {
 
-  final IconData iconData;
+  final IconData icon;
+  final double spacing;
+  final String text;
+  final Color color;
 
-  const InfoRow({super.key, required this.iconData});
+  const InfoRow({
+    super.key,
+    required this.icon,
+    required this.text,
+    this.spacing = 0.8,
+    this.color = Colors.lightGreen
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
+    return Row(
       children: [
-        Icon(iconData, color: Colors.lightGreen,size: 200),
-        AppText("Presiona el botón para tomarte una foto", size: 15,)
+        CustomIcon(icon: icon, color: color),
+        SizedBox(width: spacing),
+        AppText(text)
       ],
     );
   }

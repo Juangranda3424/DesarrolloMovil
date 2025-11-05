@@ -11,7 +11,7 @@ class BaseTemplate extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(title),
-                    backgroundColor: Colors.black,
+                    backgroundColor: Colors.lightGreen,
                     foregroundColor: Colors.white,
                     centerTitle: true,
 
