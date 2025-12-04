@@ -1,6 +1,7 @@
 
 import '../entities/product.dart';
 
+//Declaro las funciones
 abstract class ProductRepository {
   List<Product> getProducts();
   void addProduct(Product product);
