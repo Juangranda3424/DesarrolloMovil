@@ -1,78 +1,76 @@
 import 'package:flutter/material.dart';
-import 'package:lab/presentation/providers/product_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../domain/entities/product.dart';
+import '../providers/product_provider.dart';
 
-class ProductDatailPage extends StatefulWidget {
-  const ProductDatailPage({super.key});
+class ProductDetailPage extends StatefulWidget {
+  const ProductDetailPage({super.key});
 
   @override
-  State<ProductDatailPage> createState() => _ProductDatailPageState();
+  State<ProductDetailPage> createState() => _ProductDetailPageState();
 }
 
-class _ProductDatailPageState extends State<ProductDatailPage> {
-
+class _ProductDetailPageState extends State<ProductDetailPage> {
   final nameController = TextEditingController();
   final priceController = TextEditingController();
   String? productId;
 
-  //Sobreescribimos el didChangeDependencies para recibir parametros
+  //sobrescribimos el m'etodo didChangeDependecies para recibir los argumentos
   @override
-  void didChangeDependencies(){
+  void didChangeDependencies() {
     super.didChangeDependencies();
-    final arg = ModalRoute.of(context)?.settings.arguments as Product;
 
-    if( arg != null ){
-      productId = arg.id;
-      nameController.text = arg.name;
-      priceController.text = arg.precio.toString();
+    //recibir los argumentos
+    final product = ModalRoute.of(context)?.settings.arguments as Product?;
+    if (product != null){
+      productId = product.id;
+      nameController.text = product.name;
+      priceController.text = product.precio.toString();
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
-
     final provider = Provider.of<ProductProvider>(context);
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Detalle del producto'),
+        title: Text(productId == null ? 'Nuevo Producto' : 'Detalle de Producto'),
       ),
-      body:  Column(
+      body: Column(
         children: [
           TextField(
             controller: nameController,
-            decoration:  const InputDecoration(
-              labelText:  'Nombre del Producto'
-            ),
-            keyboardType: TextInputType.text,
+            decoration: const InputDecoration(labelText: 'Nombre',),
           ),
-          const SizedBox(height: 20,),
+          const SizedBox(height: 10),
           TextField(
             controller: priceController,
-            decoration:  const InputDecoration(
-                labelText:  'Precio del Producto'
-            ),
-            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(labelText: 'Precio',),
           ),
-          const SizedBox(height: 20,),
+          const SizedBox(height: 20),
           ElevatedButton(
-              onPressed: (){
-                if( productId != null){
-                  provider.add(
-                    Product(
-                        DateTime.now().microsecondsSinceEpoch.toString(),
-                        nameController.text,
-                        double.parse(priceController.text)
-                    )
-                  );
-                }
-              },
-              child: Text(
-                'Agregar'
-              )
-          )
+            onPressed: () {
+              if (productId== null){
+                provider.add(
+                  Product(DateTime.now().millisecondsSinceEpoch.toString(),
+                    nameController.text,
+                    double.tryParse(priceController.text) ?? 0,
+                  ),
+                );
+              }else{
+                provider.update(
+                  Product(
+                      DateTime.now().millisecondsSinceEpoch.toString(),
+                      nameController.text,
+                      double.tryParse(priceController.text) ?? 0),
+                );
+              }
+              Navigator.pop(context);
+            },
+            child: Text(productId == null ? 'Agregar' : 'Actualizar'),
+          ),
         ],
       ),
     );
