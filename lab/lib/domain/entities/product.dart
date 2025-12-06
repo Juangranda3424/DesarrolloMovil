@@ -1,10 +1,9 @@
+// Entidad: Objeto que representa un componente del negocio (Producto).
+// Se mantiene limpia de dependencias externas (Frameworks o DB).
+// Solo contiene datos y validaciones propias del negocio.
 class Product {
   String id;
   String name;
-  double precio;
-
-  Product(this.id, this.name, this.precio);
-
+  double price;
+  Product(this.id, this.name, this.price);
 }
-//Las entidades deben ser lo mas limpias posibles
-//Nada de funciones

@@ -1,7 +1,9 @@
+import '../../domain/repositories/product_repository.dart';
 import '../../domain/entities/product.dart';
 import '../datasources/product_memory_datasources.dart';
 
-class ProductRepositoryImpl{
+class ProductRepositoryImpl implements ProductRepository
+{
   final ProductMemoryDataSources dataSources;
 
   ProductRepositoryImpl(this.dataSources);

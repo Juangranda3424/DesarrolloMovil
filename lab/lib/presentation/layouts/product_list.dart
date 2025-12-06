@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lab/presentation/providers/product_provider.dart';
+import '../providers/product_provider.dart';
 import 'package:provider/provider.dart';
 
 class ProductListPage extends StatelessWidget {

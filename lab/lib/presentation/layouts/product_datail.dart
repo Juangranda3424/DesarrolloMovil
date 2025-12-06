@@ -12,27 +12,36 @@ class ProductDetailPage extends StatefulWidget {
 }
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
+  // Controladores para capturar el texto que escribe el usuario
   final nameController = TextEditingController();
   final priceController = TextEditingController();
+  // Variable auxiliar para saber si estamos editando o creando.
+  // Si es null = Estamos CREANDO un nuevo producto.
+  // Si tiene valor = Estamos EDITANDO un producto existente.
   String? productId;
 
-  //sobrescribimos el m'etodo didChangeDependecies para recibir los argumentos
+  //Sobrescribimos el metodo didChangeDependecies para recibir los argumentos
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    //recibir los argumentos
+    // Recibimos el argumento enviado desde la pantalla anterior (si existe).
+    // "as Product?" intenta convertir el argumento a nuestro tipo de dato.
     final product = ModalRoute.of(context)?.settings.arguments as Product?;
+    // Si recibimos un producto (estamos en modo EDICIÓN):
     if (product != null){
       productId = product.id;
       nameController.text = product.name;
-      priceController.text = product.precio.toString();
+      priceController.text = product.price.toString();
     }
   }
 
 
   @override
   Widget build(BuildContext context) {
+    // Obtenemos la referencia al Provider para poder llamar a los métodos add/update.
+    // listen: false, porque en este build no necesitamos redibujar si la lista cambia,
+    // solo queremos disparar acciones.
     final provider = Provider.of<ProductProvider>(context);
     return Scaffold(
       appBar: AppBar(
@@ -53,6 +62,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           ElevatedButton(
             onPressed: () {
               if (productId== null){
+                // LÓGICA DE GUARDADO
+                // Si productId es null, es un NUEVO registro
                 provider.add(
                   Product(DateTime.now().millisecondsSinceEpoch.toString(),
                     nameController.text,
@@ -60,9 +71,10 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   ),
                 );
               }else{
+                // Si productId YA TIENE valor, es una ACTUALIZACIÓN
                 provider.update(
                   Product(
-                      DateTime.now().millisecondsSinceEpoch.toString(),
+                      productId!,
                       nameController.text,
                       double.tryParse(priceController.text) ?? 0),
                 );
