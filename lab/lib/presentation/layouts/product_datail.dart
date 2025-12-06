@@ -55,7 +55,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       body: Column(
         children: [
           SizedBox(height: 12,),
-          Icon(Icons.icecream_outlined, size: 200,),
+          Icon(Icons.icecream_outlined, size: 20,),
           SizedBox(height: 12,),
           Text(productId == null ? 'Ingresa un nuevo helado al inventario' : 'Actualiza los valores del helado seleccionado',
             textAlign: TextAlign.center,
