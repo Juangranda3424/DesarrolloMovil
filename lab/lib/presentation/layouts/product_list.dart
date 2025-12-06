@@ -10,29 +10,46 @@ class ProductListPage extends StatelessWidget {
     final provider = Provider.of<ProductProvider>(context);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Lista de Productos'),),
+      appBar: AppBar(
+        title: const Text(
+          'LISTA DE HELADOS',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontWeight: FontWeight.w300, color: Colors.black),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.black12,
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
           Navigator.pushNamed(context, "/detail");
         },
-        child: const Icon(Icons.add),
+        backgroundColor: Colors.black,
+        child: const Icon(Icons.add, color: Colors.white,),
       ),
       body: ListView.builder(
           itemCount: provider.products.length,
           itemBuilder: (context, index) {
             final p = provider.products[index];
-            return ListTile(
-                title: Text(p.name),
-                subtitle: Text("\$ ${p.price}"),
+            return Card(
+              color: Colors.black,
+              child: ListTile(
+                leading: Icon(
+                  Icons.icecream_outlined,
+                  size: 50.0,
+                  color: Colors.white,
+                ),
+                title: Text(p.name, style: TextStyle(color: Colors.white),),
+                subtitle: Text("\$ ${p.price}", style: TextStyle(color: Colors.white),),
                 onTap: () {
                   Navigator.pushNamed(context, "/edit", arguments: p);
                 },
                 trailing: IconButton(
-                  icon: const Icon(Icons.delete),
+                  icon: const Icon(Icons.delete, color: Colors.red,),
                   onPressed: () {
                     provider.delete(p.id);
                   },
-                )
+                ),
+              ),
             );
           }
 

@@ -45,20 +45,45 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     final provider = Provider.of<ProductProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(productId == null ? 'Nuevo Producto' : 'Detalle de Producto'),
+        centerTitle: true,
+        backgroundColor: Colors.black12,
+        title: Text(productId == null ? 'NUEVO PRODUCTO' : 'DETALLE DE PRODUCTO',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontWeight: FontWeight.w300, color: Colors.black),
+        ),
       ),
       body: Column(
         children: [
-          TextField(
-            controller: nameController,
-            decoration: const InputDecoration(labelText: 'Nombre',),
+          SizedBox(height: 12,),
+          Icon(Icons.icecream_outlined, size: 200,),
+          SizedBox(height: 12,),
+          Text(productId == null ? 'Ingresa un nuevo helado al inventario' : 'Actualiza los valores del helado seleccionado',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontWeight: FontWeight.w300, color: Colors.black),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+            child: TextField(
+              controller: nameController,
+              decoration: const InputDecoration(
+                labelText: 'Nombre',
+                border: OutlineInputBorder(),
+              ),
+              keyboardType: TextInputType.text,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+            child: TextField(
+              controller: priceController,
+              decoration: const InputDecoration(
+                labelText: 'Precio',
+                border: OutlineInputBorder(),
+              ),
+              keyboardType: TextInputType.number,
+            ),
           ),
           const SizedBox(height: 10),
-          TextField(
-            controller: priceController,
-            decoration: const InputDecoration(labelText: 'Precio',),
-          ),
-          const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
               if (productId== null){
@@ -81,7 +106,15 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               }
               Navigator.pop(context);
             },
-            child: Text(productId == null ? 'Agregar' : 'Actualizar'),
+            style: ButtonStyle(
+              backgroundColor: WidgetStateProperty.all(Colors.black),
+
+            ),
+            child: Padding(
+                padding: EdgeInsetsGeometry.symmetric(horizontal: 20, vertical: 0),
+                child:
+                  Text(productId == null ? 'Agregar' : 'Actualizar', style: TextStyle(color: Colors.white),),
+            )
           ),
         ],
       ),
