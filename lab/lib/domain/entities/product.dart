@@ -5,5 +5,7 @@ class Product {
   String id;
   String name;
   double price;
-  Product(this.id, this.name, this.price);
+  Product(this.id, this.name, this.price){
+    if (price < 0) throw Exception("El precio no puede ser negativo");
+  }
 }

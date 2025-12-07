@@ -5,8 +5,7 @@ class UpdateProduct{
 
   final ProductRepository repository;
   UpdateProduct(this.repository);
-
+  //Metodo call ejecuta la acción.
   void call(Product product) => repository.updateProduct(product);
-
 
 }
